@@ -1,62 +1,83 @@
-package homework3;
-//Task3
 public class Car {
     private String name;
-    private boolean start;
-    private int gear;
+    private boolean engineRunning;
     private int speed;
 
-    public Car (String Name , boolean isStart , int Gear , int speed){
-        this.name=Name;
-        this.start=isStart;
-        this.gear=Gear;
-        this.speed=speed;
+    public Car(String name) {
+        this.name = name;
+        this.speed = 0;
+        this.engineRunning = false;
     }
 
-    public void name(){
-        System.out.println("\n"+name);
+    public void getName() {
+        System.out.println(this.name + "\n");
     }
 
-    public void status() {
-        if (start = true) {
-            System.out.println("The car is started");
-        }
-        else {
-            System.out.println("Engine is off.");
-        }
-    }
-
-    public void Gear() {
-        this.gear = gear;
-        if (gear == 0) {
-            System.out.println("Please turn on first gear ");
-            return;
-        }
-        System.out.println("Car gear is " + gear);
-    }
-
-    public void speed() {
-        this.speed = speed;
-        if (speed > 0) {
-            System.out.println("The car speed is " + speed + " km per hour");
-        } else if (speed > 150) {
-            System.out.println("Please reduce speed");
+    public void startEngine() {
+        if (!engineRunning) {
+            this.engineRunning = true;
+            System.out.println("Engine started");
         } else {
-            System.out.println("Please start because your speed is "+speed);
+            System.out.println("Engine already started");
         }
+    }
+
+    public void stopEngine() {
+        if (engineRunning) {
+            this.engineRunning = false;
+            System.out.println("Engine stopped");
+        } else {
+            System.out.println("Engine already stopped");
+        }
+    }
+
+
+    public void increaseSpeed(int speed) {
+        if (engineRunning) {
+            if (speed < 0) {
+                System.out.println("Invalid data");
+                return;
+            }
+            this.speed += speed;
+            System.out.println("Current speed" + this.speed);
+        } else {
+            System.out.println("Engine is stopped and we can't increase the  speed");
+        }
+    }
+
+    public void decreaseSpeed(int speed) {
+        if (engineRunning) {
+            if (speed < 0) {
+                System.out.println("Invalid data");
+                return;
+            }
+            int speedResult = this.speed - speed;
+            if (speedResult < 0) {
+                System.out.println("Invalid data");
+                return;
+            }
+            this.speed = speedResult;
+            System.out.println("Current speed" + this.speed);
+        }
+
+
     }
 
     public static void main(String[] args) {
-        Car car1 = new Car("Ferari",true,0,0);
-        car1.name();
-        car1.status();
-        car1.Gear();
-        car1.speed();
+        Car car = new Car("BMW");
+        car.getName(); // BMW
 
-        Car car2 = new Car("BMW",true, 5,180);
-        car2.name();
-        car2.status();
-        car2.Gear();
-        car2.speed();
+        car.startEngine(); // Engine started
+        car.startEngine(); // Engine already started
+
+        car.increaseSpeed(15); // Current speed 15
+        car.increaseSpeed(20); // Current speed 35
+
+        car.decreaseSpeed(10); // Current speed 25
+
+        car.stopEngine(); // Engine stopped
+        car.stopEngine(); // Engine already stopped
+
+        car.increaseSpeed(1); // Engine is stopped and we cant increase the speed
     }
-}
+    }
